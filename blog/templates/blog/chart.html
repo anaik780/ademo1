@@ -1,0 +1,65 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Tasks{% endblock title %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        var ctxa = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctxa, {
+            type: 'bar',
+            data: {
+                labels: [{% for item in qs %}'{{item.status}}',{% endfor %}],
+                datasets: [{
+                    label: '# of Tasks',
+                    data: [{% for item in qs %}'{{item.count}}',{% endfor %}],
+                    backgroundColor: 'rgba(0, 162, 100, 1)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        var ctx = document.getElementById('myCharts').getContext('2d');
+        var myCharts = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for item in qs %}'{{item.task}}',{% endfor %}],
+                datasets: [{
+                    label: '# of Tasks',
+                    data: [{% for item in qs %}'{{item.count}}',{% endfor %}],
+                    backgroundColor: 'rgba(0, 180, 50, 0.5)',
+                    borderColor: 'rgba(0, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+{% endblock scripts %}
+
+{% block content %}
+     <canvas id="myCharts" width="200" height="50 "></canvas>
+     <canvas id="myChart" width="200" height="50 "></canvas>
+{% endblock content %}
